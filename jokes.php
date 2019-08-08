@@ -1,8 +1,7 @@
 <?php
 	try{
-			$pdo=new PDO('mysql:host=localhost;dbname=ijdb;','root','');
-			$pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-			$sql="SELECT jokeid,joketext FROM joke";
+			include __DIR__.'\.\includes\DatabaseConnection.php';
+			$sql="SELECT joke.jokeid,joke.joketext,author.name,joke.authorid FROM joke INNER JOIN author ON joke.authorid=author.id";
 			$jokes=$pdo->query($sql);
 			$output = '';
 			$title="Joke List";
