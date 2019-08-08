@@ -1,0 +1,43 @@
+header,nav,main,footer{
+	display: block;
+	margin: none;
+	width: auto;
+}
+header{
+	background: #5fb37c;
+	padding: 8px;
+}
+nav{
+	background: #17343d;
+}
+ul{
+	margin: 0;
+}
+ul li{
+	list-style-type: none;
+	display: inline-flex;
+	padding: 5px;
+	width: 32%;
+	text-align: center;
+	color: white;
+}
+ul li a{
+	text-decoration-line: none;
+	color: white;
+}
+footer{
+	padding: 5px;
+	background: #dba246;
+}
+label,textarea{
+	display: inline-flex;
+}
+blockquote{
+	display: table;
+}
+blockquote p{
+	display: table-cell;
+}
+blockquote form{
+	display: table-cell;
+}
