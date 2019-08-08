@@ -7,5 +7,4 @@
 		</form>
 	</p>
 </blockquote>
-<p>A new line added</p>
 <?php endforeach;?>
