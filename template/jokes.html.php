@@ -1,10 +1,10 @@
 <?php foreach($jokes as $joke):?>
 <blockquote>
 	<p><?php echo htmlspecialchars_decode($joke['joketext']) ?>
-		by<a href=""><?php echo htmlspecialchars_decode($joke['name'])?></a>
+		<span>By&nbsp;</span><a href="" class="badge badge-info"><?php echo htmlspecialchars_decode($joke['name'])?></a>
 		<form action="deletejoke.php" method="POST" >
 			<input type="hidden" name="jokeid" value="<?php echo $joke['jokeid'];?>" >
-			<input type="submit" value="Delete" onclick="confirm()">
+			<input type="submit" value="Delete" onclick="confirm()" class="btn btn-danger btn-sm">
 		</form>
 	</p>
 </blockquote>

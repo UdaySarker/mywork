@@ -1,7 +1,10 @@
 header,nav,main,footer{
 	display: block;
-	margin: none;
 	width: auto;
+
+}
+footer{
+	margin-top: 10px;
 }
 header{
 	background: #5fb37c;
