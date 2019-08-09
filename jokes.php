@@ -9,8 +9,9 @@
 			include __DIR__.'\.\template\jokes.html.php';
 			$output=ob_get_clean();
 		}catch(PDOException $e){
-			$output='Unable to connect to database server. Error in'.$e->getFile()." on line".$e->getLine();
+			$output='Unable to connect to database server. Error in'.$e->getFile()." on line".$e->getLine().$e->getMessage();
 
 		}
 	include __DIR__.'\.\template\layout.html.php';
+	echo __DIR__;
 ?>
