@@ -1,3 +1,6 @@
+<p class="alert alert-info">Site Contains's
+	<span class="alert-link"><?php echo $totalJokes ?></span>&nbsp;Jokes
+</p>
 <?php foreach($jokes as $joke):?>
 <blockquote>
 	<p><?php echo htmlspecialchars_decode($joke['joketext']) ?>
