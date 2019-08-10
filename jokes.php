@@ -7,7 +7,7 @@
 			$output = '';
 			$totalJokes=totalJokesCounter($pdo);
 			$title="Joke List";
-			$data=getJoke($pdo,1);
+			//$data=getJoke($pdo,1);
 			ob_start();
 			include __DIR__.'\.\template\jokes.html.php';
 			$output=ob_get_clean();
@@ -16,7 +16,4 @@
 
 		}
 	include __DIR__.'\.\template\layout.html.php';
-	$data=getJoke($pdo,1);
-	echo "<pre>";
-	print_r($data);
 ?>

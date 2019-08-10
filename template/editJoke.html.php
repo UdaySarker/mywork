@@ -1,7 +1,9 @@
 <form action="" method="POST">
 	<div class="form-group">
 		<label>Update Your Joke</label>
-		<textarea rows="4" cols="12" name="jokes" class="form-control form-control-sm"></textarea>
+		<input type="hidden" name="jokeid" value="<?php echo $joke['jokeid']?>">
+		<input type="hidden" name="authorid" value="<?php echo $joke['authorid'] ?>">
+		<textarea rows="4" cols="12" name="jokes" class="form-control form-control-sm"><?php echo $joke['joketext'] ?></textarea>
 	</div>
 	<div class="form-group">
 		<label for="authorname">Enter Author Name</label>
