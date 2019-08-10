@@ -17,7 +17,7 @@
 		</ul>
 	</nav>
 	<main>
-		<?php echo $output; ?>
+		<?php echo $output?>
 	</main>
 	<footer>
 		<?php  echo "&copy"; ?>

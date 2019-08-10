@@ -11,6 +11,11 @@
     $joke=query($pdo,$sql,$parameters);
     return $joke->fetch();
   }
+  function getAllJoke($pdo){
+    $sql="SELECT joke.jokeid,joke.joketext,author.name,joke.authorid FROM joke INNER JOIN author ON joke.authorid=author.id";
+    $result=query($pdo,$sql,$parameters=[]);
+    return $result->fetchAll();
+  }
   function query($pdo,$sql,$parameters){
     $query=$pdo->prepare($sql);
     $query->execute($parameters);
@@ -24,6 +29,11 @@
   function updateJoke($pdo,$jokeid,$joketext,$authorid){
     $sql="UPDATE joke SET joketext=:joketext,authorid=:authorid WHERE jokeid=:jokeid";
     $parameters=[':authorid'=>$authorid,':joketext'=>$joketext,':jokeid'=>$jokeid];
+    query($pdo,$sql,$parameters);
+  }
+  function deleteJoke($pdo,$jokeid){
+    $sql="DELETE FROM joke WHERE jokeid=:jokeid";
+    $parameters=['jokeid'=>$jokeid];
     query($pdo,$sql,$parameters);
   }
  ?>
