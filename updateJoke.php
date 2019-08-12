@@ -17,4 +17,17 @@ include __DIR__.'\.\includes\DatabaseFunction.php';
       $output='Unable to connect to database server. Error in'.$e->getFile()." on line".$e->getLine().$e->getMessage();
   }
   include __DIR__.'\.\template\layout.html.php';
+  $query="UPDATE joke SET ";
+  $array=[
+    'jokeid'=>1,
+    'joketext'=>'Am i a joke to you',
+    'authorid'=>1,
+  ];
+  foreach ($array as $key => $value) {
+    $query.=$key.' =: '.$key.',';
+  }
+  $query=rtrim($query,',');
+  $query.=" WHERE id=:primarykey";
+
+  echo $query;
  ?>

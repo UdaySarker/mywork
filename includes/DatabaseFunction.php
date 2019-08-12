@@ -26,6 +26,7 @@
     $parameters=[':joketext'=>$joke,':authorid'=>$author];
     query($pdo,$sql,$parameters);
   }
+  //update joke
   function updateJoke($pdo,$jokeid,$joketext,$authorid){
     $sql="UPDATE joke SET joketext=:joketext,authorid=:authorid WHERE jokeid=:jokeid";
     $parameters=[':authorid'=>$authorid,':joketext'=>$joketext,':jokeid'=>$jokeid];
