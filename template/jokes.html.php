@@ -8,6 +8,7 @@
 			<th>Joke Id</th>
 			<th>Joke</th>
 			<th>Author</th>
+			<th>Published On</th>
 			<th>Action</th>
 		</tr>
 	</thead>
@@ -17,6 +18,7 @@
 		<td><?php echo $joke['jokeid'] ?></td>
 		<td><?php echo $joke['joketext'] ?></td>
 		<td><?php echo $joke['name'] ?></td>
+		<td><?php $date=new DateTime($joke['jokedate']); echo $date->format('jS F Y') ?></td>
 		<td>
 			<a href="updateJoke.php?jokeid=<?php echo $joke['jokeid'] ?>" class="btn btn-info btn-sm">Edit</a>
 			<form action="deletejoke.php" method="POST">

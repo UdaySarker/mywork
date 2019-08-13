@@ -3,9 +3,12 @@
 		try{
 			include __DIR__.'\.\includes\DatabaseConnection.php';
 			include __DIR__.'\.\includes\DatabaseFunction.php';
-			insertJoke($pdo,htmlspecialchars($_POST['jokes'],ENT_QUOTES),1);
+			insertJoke($pdo,[
+				'joketext'=>$_POST['joketext'],
+				'jokedate'=>new DateTime(),
+				'authorid'=>1
+			]);
 			header('Location: jokes.php');
-			$output='';
 		}catch(PDOException $e){
 			$title="An error has occured";
 			$output='Unable to connect to database server. Error in'.$e->getFile()." on line".$e->getLine().$e->getMessage();

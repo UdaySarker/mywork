@@ -12,7 +12,7 @@
     return $joke->fetch();
   }
   function getAllJoke($pdo){
-    $sql="SELECT joke.jokeid,joke.joketext,author.name,joke.authorid FROM joke INNER JOIN author ON joke.authorid=author.id";
+    $sql="SELECT joke.jokeid,joke.joketext,joke.jokedate,author.name,joke.authorid FROM joke INNER JOIN author ON joke.authorid=author.id";
     $result=query($pdo,$sql,$parameters=[]);
     return $result->fetchAll();
   }
@@ -21,20 +21,58 @@
     $query->execute($parameters);
     return $query;
   }
-  function insertJoke($pdo,$joke,$author){
-    $sql="INSERT INTO joke(joketext,jokedate,authorid) VALUES (:joketext,CURDATE(),:authorid)";
-    $parameters=[':joketext'=>$joke,':authorid'=>$author];
-    query($pdo,$sql,$parameters);
+  //insert
+  function insertJoke($pdo,$array){
+    $query='INSERT INTO joke (';
+      foreach($array as $key=>$value){
+        $query.=$key.',';
+      }
+      $query=rtrim($query,',');
+      $query.=')VALUES(';
+        foreach($array as $key=>$value){
+          $query.=':'.$key.',';
+        }
+        $query=rtrim($query,',');
+        $query.=')';
+        $array=processDates($array);
+    query($pdo,$query,$array);
   }
   //update joke
-  function updateJoke($pdo,$jokeid,$joketext,$authorid){
+  function updateJoke($pdo,$array){
     $sql="UPDATE joke SET joketext=:joketext,authorid=:authorid WHERE jokeid=:jokeid";
-    $parameters=[':authorid'=>$authorid,':joketext'=>$joketext,':jokeid'=>$jokeid];
-    query($pdo,$sql,$parameters);
+    $query="UPDATE joke SET ";
+    foreach ($array as $key => $value) {
+      $query.=$key.' =:'.$key.',';
+    }
+    $query=rtrim($query,',');
+    $query.=" WHERE jokeid =:primarykey";
+    $array['primarykey']=$array['jokeid'];
+    echo $query;
+    print_r($array);
+    query($pdo,$query,$array);
   }
   function deleteJoke($pdo,$jokeid){
     $sql="DELETE FROM joke WHERE jokeid=:jokeid";
     $parameters=['jokeid'=>$jokeid];
     query($pdo,$sql,$parameters);
   }
+  function processDates($array){
+    foreach($array as $key=>$value){
+      if($value instanceof DateTime){
+        $array[$key]=$value->format('Y-m-d');
+      }
+    }
+    return $array;
+  }
+  function deleteAuthor($pdo,$id){
+    $query="DELETE FROM author WHERE id=:id";
+    $parameters=["id"=>$id];
+    query($pdo,$query,$parameters);
+  }
+  function allAuthor($pdo){
+    $query="SELECT * FROM author";
+    $result=$query($pdo,$query,$parameters=[]);
+    return $result->fetchAll();
+  }
+  
  ?>
