@@ -22,8 +22,8 @@
     return $query;
   }
   //insert
-  function insertJoke($pdo,$array){
-    $query='INSERT INTO joke (';
+  function insert($pdo,$table,$array){
+    $query='INSERT INTO '.$table.'(';
       foreach($array as $key=>$value){
         $query.=$key.',';
       }
@@ -32,29 +32,29 @@
         foreach($array as $key=>$value){
           $query.=':'.$key.',';
         }
-        $query=rtrim($query,',');
-        $query.=')';
-        $array=processDates($array);
-    query($pdo,$query,$array);
+      $query=rtrim($query,',');
+      $query.=')';
+      echo $query;
+      $array=processDates($array);
+      query($pdo,$query,$array);
   }
   //update joke
-  function updateJoke($pdo,$array){
-    $sql="UPDATE joke SET joketext=:joketext,authorid=:authorid WHERE jokeid=:jokeid";
-    $query="UPDATE joke SET ";
+  function update($pdo,$table,$array,$primarykey){
+    $query="UPDATE ".$table." SET ";
     foreach ($array as $key => $value) {
       $query.=$key.' =:'.$key.',';
     }
     $query=rtrim($query,',');
-    $query.=" WHERE jokeid =:primarykey";
-    $array['primarykey']=$array['jokeid'];
-    echo $query;
-    print_r($array);
+    $query.=" WHERE ".$primarykey."=:primarykey";
+    $array['primarykey']=$array[$primarykey];
+    $array=processDates($array);
     query($pdo,$query,$array);
   }
-  function deleteJoke($pdo,$jokeid){
-    $sql="DELETE FROM joke WHERE jokeid=:jokeid";
-    $parameters=['jokeid'=>$jokeid];
-    query($pdo,$sql,$parameters);
+  //delete
+  function delete($pdo,$table,$primarykey,$id){
+    $query="DELETE FROM ". $table." WHERE ". $primarykey."=:id";
+    $parameters=['id'=>$id];
+    query($pdo,$query,$parameters);
   }
   function processDates($array){
     foreach($array as $key=>$value){
@@ -74,5 +74,43 @@
     $result=$query($pdo,$query,$parameters=[]);
     return $result->fetchAll();
   }
-  
+  function insertAuthor($pdo,$array){
+    $query='INSERT INTO author'.'( ';
+      foreach($array as $key=>$value){
+        $query.=$key.',';
+      }
+      $query=rtrim($query,',');
+      $query.=')VALUES(';
+        foreach($array as $key=>$value){
+          $query.=':'.$key.',';
+        }
+        $query=rtrim($query,',');
+        $query.=')';
+        query($pdo,$query,$array);
+  }
+
+  function findById($pdo,$table,$primarykey,$value){
+    $query="SELECT * FROM ".$table." WHERE ".$primarykey."=:value";
+    $parameters=[':value'=>$value];
+    $query=query($pdo,$query,$parameters);
+    return $query->fetch();
+  }
+  function getTotal($pdo,$table){
+    $query="SELECT COUNT(*) FROM ".$table;
+    $query=query($pdo,$query,$parameters=[]);
+    $query=$query->fetch();
+    return $query[0];
+  }
+  //save
+  function save($pdo,$table,$array,$primarykey){
+    try {
+      if($array[$primarykey]==''){
+        $array[$primarykey]=null;
+      }
+      insert($pdo,$table,$array);
+    } catch (PDOException $e) {
+      update($pdo,$table,$array,$primarykey);
+    }
+
+  }
  ?>

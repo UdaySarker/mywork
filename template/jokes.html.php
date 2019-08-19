@@ -1,3 +1,4 @@
+
 <p class="badge badge-primary">Site Contains's
 	<span class="badge badge-light"><?php echo $totalJokes ?></span>&nbsp;Jokes
 </p>
@@ -20,10 +21,10 @@
 		<td><?php echo $joke['name'] ?></td>
 		<td><?php $date=new DateTime($joke['jokedate']); echo $date->format('jS F Y') ?></td>
 		<td>
-			<a href="updateJoke.php?jokeid=<?php echo $joke['jokeid'] ?>" class="btn btn-info btn-sm">Edit</a>
-			<form action="deletejoke.php" method="POST">
+			<a href="index.php?action=edit&jokeid=<?php echo $joke['jokeid'] ?>" class="btn btn-info btn-sm">Edit</a>
+			<form action="index.php?action=delete" method="POST">
 				<input type="hidden" name="jokeid" value="<?php echo $joke['jokeid'] ?>">
-				<input type="submit" class="btn btn-danger btn-sm" name="delete" value="Delete">
+				<input type="submit" class="btn btn-danger btn-sm" value="Delete">
 			</form>
 		</td>
 <?php endforeach; ?>

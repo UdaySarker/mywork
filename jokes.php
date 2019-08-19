@@ -1,9 +1,21 @@
 <?php
 	try{
 			include __DIR__.'\.\includes\DatabaseConnection.php';
-			include __DIR__.'\.\includes\DatabaseFunction.php';
-			$jokes=getAllJoke($pdo);
-			$totalJokes=totalJokesCounter($pdo);
+			include __DIR__.'\.\classes\DatabaseTable.php';
+			$jokesTable=new DatabaseTable($pdo,'joke','jokeid');
+			$authorsTable=new DatabaseTable($pdo,'author','id');
+			$result=$jokesTable->findAll();
+			$jokes=[];
+			foreach($result as $joke){
+				$author=$authorsTable->findById($joke['authorid']);
+				$jokes[]=[
+					'jokeid'=>$joke['jokeid'],
+					'joketext'=>$joke['joketext'],
+					'jokedate'=>$joke['jokedate'],
+					'name'=>$author['name'],
+				];
+			}
+			$totalJokes=$jokesTable->getTotal();
 			$title="Joke List";
 			ob_start();
 			include __DIR__.'\.\template\jokes.html.php';
